@@ -16,14 +16,14 @@ namespace VendaVeiculosApi.Controllers
             _context = context;
         }
 
-        // GET api/cliente
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
             return await _context.Clientes.ToListAsync();
         }
 
-        // GET api/cliente/5
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
@@ -33,7 +33,7 @@ namespace VendaVeiculosApi.Controllers
             return cliente;
         }
 
-        // POST api/cliente
+        
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
@@ -42,7 +42,7 @@ namespace VendaVeiculosApi.Controllers
             return CreatedAtAction(nameof(GetCliente), new { id = cliente.IdCliente }, cliente);
         }
 
-        // PUT api/cliente/5
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCliente(int id, Cliente cliente)
         {
@@ -54,7 +54,7 @@ namespace VendaVeiculosApi.Controllers
             return NoContent();
         }
 
-        // DELETE api/cliente/5
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCliente(int id)
         {
