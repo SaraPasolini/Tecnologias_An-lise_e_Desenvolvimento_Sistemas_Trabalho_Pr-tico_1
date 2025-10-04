@@ -14,11 +14,11 @@ namespace VendaVeiculosApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Adiciona o DbContext com a ConnectionString
-            builder.Services.AddDbContext<ApplicationContext>(options =>
+            builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -30,7 +30,6 @@ namespace VendaVeiculosApi
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
             app.Run();

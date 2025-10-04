@@ -4,9 +4,12 @@ using VendaVeiculosApi.Models;
 
 namespace VendaVeiculosApi.Data
 {
-    public class AppDbContext : DbContext
+   public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options) 
+        : base(options)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    }
 
         public DbSet<Aluguel> Aluguei { get; set; }
         public DbSet<Cliente> Cliente { get; set; }

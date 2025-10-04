@@ -10,8 +10,8 @@ using VendaVeiculosApi.Data;
 
 namespace VendaVeiculosApi.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AppDbContext))]
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -24,14 +24,16 @@ namespace VendaVeiculosApi.Migrations
 
             modelBuilder.Entity("VendaVeiculosApi.Models.Aluguel", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                    b.Property<int>("AluguelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AluguelId"));
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DataDevolucao")
+                    b.Property<DateTime>("DataDevolucao")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataFim")
@@ -40,16 +42,11 @@ namespace VendaVeiculosApi.Migrations
                     b.Property<DateTime>("DataInicio")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("QuilometragemFinal")
+                    b.Property<int>("KmFinal")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuilometragemInicial")
+                    b.Property<int>("KmInicial")
                         .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("ValorDiaria")
                         .HasColumnType("decimal(18,2)");
@@ -60,29 +57,31 @@ namespace VendaVeiculosApi.Migrations
                     b.Property<int>("VeiculoId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("AluguelId");
 
-                    b.ToTable("Alugueis");
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("VeiculoId");
+
+                    b.ToTable("Aluguei");
                 });
 
             modelBuilder.Entity("VendaVeiculosApi.Models.Cliente", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ClienteId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClienteId"));
 
                     b.Property<string>("CPF")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Endereco")
+                    b.Property<int>("CodPessoa")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -94,65 +93,42 @@ namespace VendaVeiculosApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ClienteId");
 
-                    b.HasIndex("CPF")
-                        .IsUnique();
-
-                    b.ToTable("Clientes");
+                    b.ToTable("Cliente");
                 });
 
             modelBuilder.Entity("VendaVeiculosApi.Models.Fabricante", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("FabricanteId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FabricanteId"));
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Pais")
+                    b.Property<string>("Origem")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("FabricanteId");
 
-                    b.ToTable("Fabricantes");
-                });
-
-            modelBuilder.Entity("VendaVeiculosApi.Models.Pagamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    b.Property<int>("AluguelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MetodoPagamento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Pagamentos");
+                    b.ToTable("Fabricante");
                 });
 
             modelBuilder.Entity("VendaVeiculosApi.Models.Veiculo", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                    b.Property<int>("VeiculoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VeiculoId"));
+
+                    b.Property<int>("Ano")
+                        .HasColumnType("int");
 
                     b.Property<string>("Cor")
                         .IsRequired()
@@ -161,34 +137,36 @@ namespace VendaVeiculosApi.Migrations
                     b.Property<int>("FabricanteId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Km")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Modelo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Placa")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("VeiculoId");
 
-                    b.HasIndex("Placa")
-                        .IsUnique();
+                    b.HasIndex("FabricanteId");
 
-                    b.ToTable("Veiculos");
+                    b.ToTable("Veiculo");
                 });
 
             modelBuilder.Entity("VendaVeiculosApi.Models.Aluguel", b =>
                 {
                     b.HasOne("VendaVeiculosApi.Models.Cliente", "Cliente")
                         .WithMany("Alugueis")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("VendaVeiculosApi.Models.Veiculo", "Veiculo")
                         .WithMany("Alugueis")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("VeiculoId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cliente");
@@ -196,31 +174,15 @@ namespace VendaVeiculosApi.Migrations
                     b.Navigation("Veiculo");
                 });
 
-            modelBuilder.Entity("VendaVeiculosApi.Models.Pagamento", b =>
-                {
-                    b.HasOne("VendaVeiculosApi.Models.Aluguel", "Aluguel")
-                        .WithMany("Pagamentos")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Aluguel");
-                });
-
             modelBuilder.Entity("VendaVeiculosApi.Models.Veiculo", b =>
                 {
                     b.HasOne("VendaVeiculosApi.Models.Fabricante", "Fabricante")
                         .WithMany("Veiculos")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("FabricanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Fabricante");
-                });
-
-            modelBuilder.Entity("VendaVeiculosApi.Models.Aluguel", b =>
-                {
-                    b.Navigation("Pagamentos");
                 });
 
             modelBuilder.Entity("VendaVeiculosApi.Models.Cliente", b =>

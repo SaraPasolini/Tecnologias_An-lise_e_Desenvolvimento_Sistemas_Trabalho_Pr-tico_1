@@ -9,11 +9,11 @@ namespace VendaVeiculosApi.Models
         public int FabricanteId { get; set; }
 
         [Required]
-        public string Nome { get; set; } = string.Empty;
+        public string? Nome { get; set; } = string.Empty;
 
         [Required]
-        public string Origem { get; set; } = string.Empty;
+        public string? Origem { get; set; } = string.Empty;
 
-        public ICollection<Veiculo> Veiculos { get; set; } = new List<Veiculo>();
+        public ICollection<Veiculo>? Veiculos { get; set; } = new List<Veiculo>();
     }
 }

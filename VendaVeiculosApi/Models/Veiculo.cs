@@ -19,10 +19,13 @@ namespace VendaVeiculosApi.Models
         public string Placa { get; set; } = string.Empty;
 
         [Required]
+        public string Cor { get; set; } = string.Empty;
+
+        [Required]
         public int Ano { get; set; }
 
         [Required]
-        public decimal Quilometragem { get; set; }
+        public decimal Km { get; set; }
 
         public Fabricante? Fabricante { get; set; }
         public ICollection<Aluguel>? Alugueis { get; set; }

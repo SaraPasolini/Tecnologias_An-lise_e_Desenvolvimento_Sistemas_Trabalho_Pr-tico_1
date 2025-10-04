@@ -41,10 +41,7 @@ namespace VendaVeiculosApi.Controllers
         [HttpGet("pega-veiculos")]
         public async Task<ActionResult<IEnumerable<Fabricante>>> GetFabricantespegaVeiculos()
         {
-            var fabricantes = await _context.Fabricante
-                .Include(f => f.Veiculos) 
-                .ToListAsync();
-
+            var fabricantes = await _context.Fabricante.ToListAsync();
             return Ok(fabricantes);
         }
 

@@ -6,6 +6,8 @@ C:\Users\saraa\TrabalhoPrático1\Tecnologias_An-lise_e_Desenvolvimento_Sistemas_
 C:\Users\saraa\TrabalhoPrático1\Tecnologias_An-lise_e_Desenvolvimento_Sistemas_Trabalho_Pr-tico_1\VendaVeiculosApi\bin\Debug\net9.0\VendaVeiculosApi.runtimeconfig.json
 C:\Users\saraa\TrabalhoPrático1\Tecnologias_An-lise_e_Desenvolvimento_Sistemas_Trabalho_Pr-tico_1\VendaVeiculosApi\bin\Debug\net9.0\VendaVeiculosApi.dll
 C:\Users\saraa\TrabalhoPrático1\Tecnologias_An-lise_e_Desenvolvimento_Sistemas_Trabalho_Pr-tico_1\VendaVeiculosApi\bin\Debug\net9.0\VendaVeiculosApi.pdb
+C:\Users\saraa\TrabalhoPrático1\Tecnologias_An-lise_e_Desenvolvimento_Sistemas_Trabalho_Pr-tico_1\VendaVeiculosApi\bin\Debug\net9.0\AutoMapper.dll
+C:\Users\saraa\TrabalhoPrático1\Tecnologias_An-lise_e_Desenvolvimento_Sistemas_Trabalho_Pr-tico_1\VendaVeiculosApi\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\saraa\TrabalhoPrático1\Tecnologias_An-lise_e_Desenvolvimento_Sistemas_Trabalho_Pr-tico_1\VendaVeiculosApi\bin\Debug\net9.0\Azure.Core.dll
 C:\Users\saraa\TrabalhoPrático1\Tecnologias_An-lise_e_Desenvolvimento_Sistemas_Trabalho_Pr-tico_1\VendaVeiculosApi\bin\Debug\net9.0\Azure.Identity.dll
 C:\Users\saraa\TrabalhoPrático1\Tecnologias_An-lise_e_Desenvolvimento_Sistemas_Trabalho_Pr-tico_1\VendaVeiculosApi\bin\Debug\net9.0\Humanizer.dll

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using VendaVeiculosApi.Data;
 using VendaVeiculosApi.Models;
+using VendaVeiculosApi.DTOs;
 
 namespace VendaVeiculosApi.Controllers
 {
@@ -19,53 +20,66 @@ namespace VendaVeiculosApi.Controllers
 
         // GET Geral
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Aluguel>>> GetAlugueis()
+        public async Task<ActionResult<IEnumerable<AluguelDTOs>>> GetAlugueis()
         {
-            var Aluguel = await _context.Aluguei.ToListAsync();
-            return Ok(Aluguel);
+            var alugueis = await _context.Aluguei.ToListAsync();
+            return Ok(alugueis);
         }
 
         // GET por id
         [HttpGet("{id}")]
-        public async Task<ActionResult<Aluguel>> GetAluguel(int id)
+        public async Task<ActionResult<AluguelDTOs>> GetAluguel(int id)
         {
             var aluguel = await _context.Aluguei.FindAsync(id);
-            if (aluguel == null)
-            {
-                return NotFound();
-            }
-            return aluguel;
+            return Ok(aluguel);
         }
 
-        // GET por veículo
-        [HttpGet("por-veiculo/{veiculoId}")]
-        public async Task<ActionResult<IEnumerable<Aluguel>>> GetAlugueisPorVeiculo(int veiculoId)
+         [HttpGet("veiculo/{veiculoId}")]
+        public async Task<ActionResult<IEnumerable<AluguelDTOs>>> GetAluguelPorVeiculo(int veiculoId)
         {
-            var alugueis = await _context.Aluguei
-                .Where(a => a.VeiculoId == veiculoId)
-                .ToListAsync();
-
+            var alugueis = await _context.Aluguei.Where(a => a.VeiculoId == veiculoId).ToListAsync();
             return Ok(alugueis);
         }
 
         // POST criar
         [HttpPost]
-        public async Task<ActionResult<Aluguel>> PostAluguel(Aluguel aluguel)
+        public async Task<ActionResult<AluguelDTOs>> PostAluguel(AluguelDTOs aluguelDTOs)
         {
+            var aluguel = new Aluguel
+            {
+    
+                AluguelId = aluguelDTOs.AluguelId,
+                VeiculoId = aluguelDTOs.VeiculoId,
+                ClienteId = aluguelDTOs.ClienteId,
+                DataInicio = aluguelDTOs.DataInicio,
+                DataFim = aluguelDTOs.DataFim,
+                ValorTotal = aluguelDTOs.ValorTotal
+            };
+
             _context.Aluguei.Add(aluguel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetAluguel), new { id = aluguel.AluguelId }, aluguel);
+            return CreatedAtAction("GetAluguel", new { id = aluguel.AluguelId }, aluguel);
         }
 
         // PUT atualizar
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAluguel(int id, Aluguel aluguel)
+        public async Task<IActionResult> PutAluguel(int id, AluguelDTOs aluguelDto)
         {
-            if (id != aluguel.AluguelId)
-            {
-                return BadRequest();
-            }
+
+            var aluguel = await _context.Aluguei.FindAsync(id);
+            if (aluguel == null)
+                return NotFound();
+
+            aluguel.ClienteId = aluguelDto.ClienteId;
+            aluguel.VeiculoId = aluguelDto.VeiculoId;
+            aluguel.DataInicio = aluguelDto.DataInicio;
+            aluguel.DataFim = aluguelDto.DataFim;
+            aluguel.DataDevolucao = aluguelDto.DataDevolucao ?? default(DateTime);
+            aluguel.KmInicial = (int)aluguelDto.KmInicial;
+            aluguel.KmFinal = (int)aluguelDto.KmFinal;
+            aluguel.ValorDiaria = aluguelDto.ValorDiaria;
+            aluguel.ValorTotal = aluguelDto.ValorTotal;
 
             _context.Entry(aluguel).State = EntityState.Modified;
 
@@ -76,17 +90,14 @@ namespace VendaVeiculosApi.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!AlugueiExists(id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
             return NoContent();
         }
+
 
         // DELETE apagar
         [HttpDelete("{id}")]
