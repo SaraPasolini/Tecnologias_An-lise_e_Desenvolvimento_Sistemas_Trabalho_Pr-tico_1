@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using VendaVeiculosApi.Data;
 using Microsoft.OpenApi.Models;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using VendaVeiculosApi.Models;
 
 
 namespace VendaVeiculosApi

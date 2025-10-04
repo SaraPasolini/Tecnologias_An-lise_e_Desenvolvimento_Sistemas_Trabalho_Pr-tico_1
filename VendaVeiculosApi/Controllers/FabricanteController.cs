@@ -38,8 +38,11 @@ namespace VendaVeiculosApi.Controllers
         public async Task<ActionResult<Fabricante>> PostFabricante(Fabricante fabricante)
         {
             _context.Fabricantes.Add(fabricante);
+
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetFabricante), new { id = fabricante.Id }, fabricante);
+            
+            return Ok();
+            // return CreatedAtAction(nameof(GetFabricante), new { id = fabricante.Id }, fabricante);
         }
 
         [HttpPut("{id}")]
