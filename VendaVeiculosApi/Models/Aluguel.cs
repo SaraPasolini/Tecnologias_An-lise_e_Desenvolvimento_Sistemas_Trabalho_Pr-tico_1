@@ -41,6 +41,6 @@ namespace VendaVeiculosApi.Models
         [MaxLength(50)]
         public string Status { get; set; } = "EmAndamento";
 
-        public ICollection<Pagamento> Pagamentos { get; set; } = new List<Pagamento>();
+        
     }
 }
