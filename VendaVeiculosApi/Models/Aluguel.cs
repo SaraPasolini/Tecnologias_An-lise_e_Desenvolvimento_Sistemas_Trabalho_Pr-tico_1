@@ -8,15 +8,13 @@ namespace VendaVeiculosApi.Models
     public class Aluguel
     {
         [Key]
-        public int Id { get; set; }
+        public int AluguelId { get; set; }
 
-        [Required]
+        [ForeignKey("Cliente")]
         public int ClienteId { get; set; }
-        public Cliente Cliente { get; set; } = new Cliente();
 
-        [Required]
+        [ForeignKey("Veiculo")]
         public int VeiculoId { get; set; }
-        public Veiculo Veiculo { get; set; } = new Veiculo();
 
         [Required]
         public DateTime DataInicio { get; set; }
@@ -24,23 +22,21 @@ namespace VendaVeiculosApi.Models
         [Required]
         public DateTime DataFim { get; set; }
 
-        public DateTime? DataDevolucao { get; set; }
+        public DateTime DataDevolucao { get; set; }
 
         [Required]
-        public int QuilometragemInicial { get; set; }
+        public int KmInicial { get; set; }
 
-        public int? QuilometragemFinal { get; set; }
+        public int KmFinal { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")]
         public decimal ValorDiaria { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
         public decimal ValorTotal { get; set; }
 
-        [MaxLength(50)]
-        public string Status { get; set; } = "EmAndamento";
+        public Cliente? Cliente { get; set; }
+        public Veiculo? Veiculo { get; set; }
 
-        
+
     }
 }

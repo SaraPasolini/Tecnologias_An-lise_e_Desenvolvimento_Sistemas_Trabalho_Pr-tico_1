@@ -7,10 +7,13 @@ namespace VendaVeiculosApi.Models
     public class Cliente
     {
         [Key]
-        public int Id { get; set; }
+        public int ClienteId { get; set; }
 
         [Required]
         public string Nome { get; set; } = string.Empty;
+
+        [Required]
+        public int CodPessoa { get; set; } = int.MinValue;
 
         [Required]
         public string CPF { get; set; } = string.Empty;
@@ -21,9 +24,7 @@ namespace VendaVeiculosApi.Models
         [Required]
         public string Telefone { get; set; } = string.Empty;
 
-        [Required]
-        public string Endereco { get; set; } = string.Empty;
+        public ICollection<Aluguel>? Alugueis { get; set; } = new List<Aluguel>();
 
-        public ICollection<Aluguel> Alugueis { get; set; } = new List<Aluguel>();
     }
 }

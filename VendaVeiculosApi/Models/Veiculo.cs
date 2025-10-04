@@ -7,12 +7,25 @@ namespace VendaVeiculosApi.Models
     public class Veiculo
     {
         [Key]
-        public int Id { get; set; }
-        public string Fabricante { get; set; } = string.Empty;
+        public int VeiculoId { get; set; }
+
+        [ForeignKey("Fabricante")]
+        public int FabricanteId { get; set; }
+
+        [Required]
         public string Modelo { get; set; } = string.Empty;
+
+        [Required]
+        public string Placa { get; set; } = string.Empty;
+
+        [Required]
         public int Ano { get; set; }
-        public decimal Pagamento { get; set; }
-        public bool Aluguel { get; set; } = false;
+
+        [Required]
+        public decimal Quilometragem { get; set; }
+
+        public Fabricante? Fabricante { get; set; }
+        public ICollection<Aluguel>? Alugueis { get; set; }
 
     }
 }
